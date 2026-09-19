@@ -1,0 +1,21 @@
+# macOS
+.DS_Store
+
+# Python
+__pycache__/
+*.pyc
+.venv/
+*.pt
+
+# Node
+node_modules/
+.next/
+out/
+npm-debug.log*
+
+# Runtime data (SQLite DB + uploaded images)
+backend/data/
+
+# Environment
+.env
+.env.local
