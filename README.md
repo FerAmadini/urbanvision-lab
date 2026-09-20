@@ -70,3 +70,20 @@ documentados: [`backend/sample_images/`](backend/sample_images/SOURCES.md).
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — decisiones técnicas y qué cambiaría en producción.
 - [docs/GUIA_DEMO_ENTREVISTA.md](docs/GUIA_DEMO_ENTREVISTA.md) — guión de 20-30 minutos y Q&A.
 - [docs/RESUMEN_REPASO_ENTREVISTA.md](docs/RESUMEN_REPASO_ENTREVISTA.md) — conceptos desde cero y respuestas pulidas a preguntas duras.
+
+## Deploy público (demo en línea)
+
+- **Frontend**: Vercel (plan free) — proyecto `urbanvision-lab`, con
+  `NEXT_PUBLIC_API_URL` apuntando al backend público.
+- **Backend**: Render (plan free) vía [render.yaml](render.yaml) (Blueprint).
+- **Nota de licencia**: el backend se publica en este repositorio público, que
+  actúa como oferta de código fuente requerida por AGPL-3.0 (Ultralytics) al
+  exponer el modelo como servicio de red.
+
+Limitaciones del hosting gratuito (documentadas, no bugs):
+
+- Render duerme el servicio tras ~15 min sin tráfico: el primer request
+  después de una pausa tarda 30-90 s (descarga de pesos incluida).
+- El SQLite y los uploads son **efímeros** en Render: el historial se resetea
+  en cada reinicio. La demo está pensada para que cada visitante procese sus
+  propias imágenes en vivo.

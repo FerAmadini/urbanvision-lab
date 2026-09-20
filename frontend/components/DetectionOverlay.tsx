@@ -37,14 +37,27 @@ export default function DetectionOverlay({
           const labelY = Math.max(y1 - 28, 0);
           return (
             <g key={d.id} className="cursor-pointer" onClick={() => onSelect(d.id)}>
+              {selected ? (
+                <rect
+                  x={x1}
+                  y={y1}
+                  width={Math.max(x2 - x1, 1)}
+                  height={Math.max(y2 - y1, 1)}
+                  fill="none"
+                  stroke="#ffffff"
+                  strokeWidth={10}
+                  opacity={0.85}
+                />
+              ) : null}
               <rect
                 x={x1}
                 y={y1}
                 width={Math.max(x2 - x1, 1)}
                 height={Math.max(y2 - y1, 1)}
-                fill="transparent"
+                fill={color}
+                fillOpacity={selected ? 0.16 : 0}
                 stroke={color}
-                strokeWidth={selected ? 6 : 3}
+                strokeWidth={selected ? 4.5 : 3}
                 strokeDasharray={d.verdict === "rejected" ? "12 8" : undefined}
                 opacity={d.verdict === "rejected" ? 0.55 : 1}
               />

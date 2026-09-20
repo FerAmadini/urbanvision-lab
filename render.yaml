@@ -1,0 +1,20 @@
+# Render Blueprint — backend FastAPI de UrbanVision Lab.
+# Al conectar este repo en Render (New > Blueprint), se crea este servicio.
+# Spec: https://render.com/docs/blueprint-spec
+services:
+  - type: web
+    name: urbanvision-api
+    runtime: python
+    pythonVersion: "3.13"
+    plan: free
+    rootDir: backend
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: CONFIDENCE_THRESHOLD
+        value: "0.40"
+      # URL pública del frontend en Vercel (ajustar si el nombre del proyecto cambia).
+      - key: ALLOWED_ORIGINS
+        value: "https://urbanvision-lab.vercel.app"
