@@ -69,3 +69,4 @@ documentados: [`backend/sample_images/`](backend/sample_images/SOURCES.md).
 - [docs/API_CONTRACT.md](docs/API_CONTRACT.md) — contrato exacto de la API.
 - [docs/ARCHITECTURE.md](docs/ARCHITECTURE.md) — decisiones técnicas y qué cambiaría en producción.
 - [docs/GUIA_DEMO_ENTREVISTA.md](docs/GUIA_DEMO_ENTREVISTA.md) — guión de 20-30 minutos y Q&A.
+- [docs/RESUMEN_REPASO_ENTREVISTA.md](docs/RESUMEN_REPASO_ENTREVISTA.md) — conceptos desde cero y respuestas pulidas a preguntas duras.
