@@ -73,9 +73,11 @@ documentados: [`backend/sample_images/`](backend/sample_images/SOURCES.md).
 
 ## Deploy público (demo en línea)
 
-- **Frontend**: Vercel (plan free) — proyecto `urbanvision-lab`, con
-  `NEXT_PUBLIC_API_URL` apuntando al backend público.
-- **Backend**: Render (plan free) vía [render.yaml](render.yaml) (Blueprint).
+- **Frontend**: Vercel (plan free) — https://urbanvision-lab.vercel.app
+  (proyecto `urbanvision-lab`, Root Directory `frontend`, Framework Preset
+  Next.js, con `NEXT_PUBLIC_API_URL` apuntando al backend público).
+- **Backend**: Render (plan free) — https://urbanvision-api-m3qv.onrender.com
+  vía [render.yaml](render.yaml) (Blueprint).
 - **Nota de licencia**: el backend se publica en este repositorio público, que
   actúa como oferta de código fuente requerida por AGPL-3.0 (Ultralytics) al
   exponer el modelo como servicio de red.
