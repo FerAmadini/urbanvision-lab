@@ -5,14 +5,17 @@ services:
   - type: web
     name: urbanvision-api
     runtime: python
-    pythonVersion: "3.13"
     plan: free
     rootDir: backend
     buildCommand: pip install -r requirements.txt
     startCommand: uvicorn app.main:app --host 0.0.0.0 --port $PORT
     healthCheckPath: /api/health
-    autoDeploy: true
+    autoDeployTrigger: commit
     envVars:
+      # Render native runtime: la versión de Python se fija por env var,
+      # no por un campo del blueprint (3.14 rompería torch/ultralytics).
+      - key: PYTHON_VERSION
+        value: 3.13.3
       - key: CONFIDENCE_THRESHOLD
         value: "0.40"
       # URL pública del frontend en Vercel (ajustar si el nombre del proyecto cambia).
