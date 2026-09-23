@@ -4,6 +4,7 @@ from contextlib import asynccontextmanager
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
+from PIL import Image
 
 from .classes import URBAN_CLASSES
 from .config import ALLOWED_ORIGINS, MODEL_PATH, UPLOADS_DIR, WEIGHTS_DIR
@@ -22,6 +23,10 @@ async def lifespan(app: FastAPI):
     # to backend/weights/ on first run).
     init_db()
     app.state.model = load_model(MODEL_PATH)
+    # Warm up inference kernels so the first real request after a cold start
+    # does not pay one-time init costs (matters on free-tier hosts).
+    dummy = Image.new("RGB", (64, 64), (120, 120, 120))
+    app.state.model.predict(dummy, conf=0.99, verbose=False)
     yield
 
 

@@ -13,7 +13,10 @@ CONFIDENCE_THRESHOLD = float(os.environ.get("CONFIDENCE_THRESHOLD", "0.40"))
 ALLOWED_ORIGINS = [
     origin.strip()
     for origin in os.environ.get(
-        "ALLOWED_ORIGINS", "http://localhost:3000"
+        "ALLOWED_ORIGINS",
+        # Demo origins allowed by default so free-tier hosts work with zero
+        # configuration; override via env in real deployments.
+        "http://localhost:3000,https://urbanvision-lab.vercel.app",
     ).split(",")
     if origin.strip()
 ]
