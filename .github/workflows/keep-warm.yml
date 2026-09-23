@@ -1,5 +1,5 @@
-# Keep-warm: ping periódico al backend en Render (plan free).
-# Render duerme el servicio tras ~15 min sin tráfico; este cron genera
+# Keep-warm: ping periódico al backend en Modal (plan free).
+# Modal duerme el servicio tras ~60 s sin tráfico; este cron genera
 # actividad cada 10 min para que la demo pública responda al instante.
 # En repos públicos, GitHub Actions es gratuito.
 name: keep-warm
@@ -13,10 +13,10 @@ jobs:
   ping:
     runs-on: ubuntu-latest
     steps:
-      - name: Ping Render backend
+      - name: Ping Modal backend
         run: |
           for i in 1 2 3; do
-            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 90 https://urbanvision-api-m3qv.onrender.com/api/health)
+            code=$(curl -s -o /dev/null -w "%{http_code}" --max-time 90 https://fernandoamadini--urbanvision-api-web.modal.run/api/health)
             if [ "$code" = "200" ]; then
               echo "Backend despierto (HTTP $code)"
               exit 0
