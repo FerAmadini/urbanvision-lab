@@ -17,20 +17,20 @@ from pathlib import Path
 import modal
 
 BACKEND_DIR = Path(__file__).resolve().parent
-WEIGHTS_URL = (
-    "https://github.com/ultralytics/assets/releases/download/v8.4.0/yolo11n.pt"
-)
 
 image = (
     modal.Image.debian_slim(python_version="3.13")
-    .pip_install_from_requirements(BACKEND_DIR / "requirements.txt")
-    # Ship the FastAPI package inside the image; /srv ends up on sys.path.
-    .add_local_dir(BACKEND_DIR / "app", remote_path="/srv/app")
+    # opencv-python (pulled by ultralytics) needs libGL/libglib at runtime.
     .run_commands(
-        "mkdir -p /weights /srv/data/uploads",
-        f"curl -sL -o /weights/yolo11n.pt {WEIGHTS_URL}",
+        "apt-get update",
+        "apt-get install -y --no-install-recommends libgl1 libglib2.0-0",
+        "rm -rf /var/lib/apt/lists/*",
     )
+    .pip_install_from_requirements(BACKEND_DIR / "requirements.txt")
+    .run_commands("mkdir -p /weights /srv/data/uploads")
     .env({"MODEL_PATH": "/weights/yolo11n.pt"})
+    # add_local_* must be the last step of the image chain.
+    .add_local_dir(BACKEND_DIR / "app", remote_path="/srv/app")
 )
 
 app = modal.App("urbanvision-api")
@@ -42,8 +42,8 @@ app = modal.App("urbanvision-api")
     # A single container keeps the ephemeral SQLite database consistent
     # across requests (demo scale; production would use managed Postgres).
     max_containers=1,
-    allow_concurrent_inputs=4,
 )
+@modal.concurrent(max_inputs=4)
 @modal.asgi_app()
 def web():
     import sys
